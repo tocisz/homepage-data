@@ -54,39 +54,29 @@ function postData(url, data = {}) {
         referrer: "client", // no-referrer, *client
         body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
-    // .then(response => response.json()); // parses response to JSON
 }
 
 function refresh() {
-  var respDom = document.getElementById("response");
+  var $resp = document.getElementById("response");
 
- respDom.innerHTML = "Request sent...";
- setStyle(respDom, 'alert-light');
+ $resp.innerHTML = "Request sent...";
+ setStyle($resp, 'alert-light');
 
- var pwdDom = document.getElementById("pwd");
- var pass = pwdDom.value;
- pwdDom.value = "";
+ var $pwd = document.getElementById("pwd");
+ var pass = $pwd.value;
+ $pwd.value = "";
 
  postData("https://api.tomasz-cichocki.pl/python37/python37/", pass)
    .then(response => {
-     switch (response.status) {
-       case 200:
-         setStyle(respDom, 'alert-success');
-         break;
-
-       case 403:
-       default:
-         setStyle(respDom, 'alert-danger');
-         break;
-     }
-     return response.json()
+     setStyle($resp, (response.status == 200) ? 'alert-success' : 'alert-danger');
+     return response.json();
    })
    .then(response => {
-     respDom.innerHTML = response;
+     $resp.innerHTML = response;
    })
    .catch(err => {
-     setStyle(respDom, 'alert-danger');
-     respDom.innerHTML = err;
+     setStyle($resp, 'alert-danger');
+     $resp.innerHTML = err;
    });
 }
 </script>
