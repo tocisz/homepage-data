@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The blog archive</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<header></header>
+<div class="container-fluid">
+  <h1><a href="/">The blog archive</a></h1>
+
+  <div class="row">
+    <div class="col-sm">
+      <form action="#">
+        <div class="form-group">
+          <label for="pwd">Refresh password:</label>
+          <input type="password" class="form-control" id="pwd">
+        </div>
+        <button type="submit" class="btn btn-default" onclick="refresh();">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm">
+      <div id="response" class="alert alert-light" role="alert">
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer class="bd-footer"></footer>
+
+<script type="application/javascript">
+function setStyle(elem, style) {
+  elem.classList.remove('alert-light');
+  elem.classList.remove('alert-success');
+  elem.classList.remove('alert-danger');
+  elem.classList.add(style);
+}
+
+function postData(url, data = {}) {
+  // Default options are marked with *
+    return fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "omit", // include, *same-origin, omit
+        headers: {
+            "Content-Type": "application/json",
+        },
+        redirect: "follow", // manual, *follow, error
+        referrer: "client", // no-referrer, *client
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+    // .then(response => response.json()); // parses response to JSON
+}
+
+function refresh() {
+  var respDom = document.getElementById("response");
+
+ respDom.innerHTML = "Request sent...";
+ setStyle(respDom, 'alert-light');
+
+ var pwdDom = document.getElementById("pwd");
+ var pass = pwdDom.value;
+ pwdDom.value = "";
+
+ postData("https://api.tomasz-cichocki.pl/python37/python37/", pass)
+   .then(response => {
+     switch (response.status) {
+       case 200:
+         setStyle(respDom, 'alert-success');
+         break;
+
+       case 403:
+       default:
+         setStyle(respDom, 'alert-danger');
+         break;
+     }
+     return response.json()
+   })
+   .then(response => {
+     respDom.innerHTML = response;
+   })
+   .catch(err => {
+     setStyle(respDom, 'alert-danger');
+     respDom.innerHTML = err;
+   });
+}
+</script>
+
+</body>
+</html>
