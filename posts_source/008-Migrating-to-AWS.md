@@ -56,20 +56,117 @@ they will be used.
 If your domain is hosted by Route 53, easiest way to validate a certificate
 (prove that you are the owner of a domain) [is by DNS](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html).
 In this case AWS will automatically create some DNS records for validation purpose.
-When certificate is issued you can remove those records.
+When certificate is issued you can remove these.
+
+### IAM
+
+Another thing to ensure before CloudFront distribution will work are
+permissions.
+AWS has elaborate system to manage what operations on what resources are
+allowed by what `?parties?`. Service that is responsible for permissions
+in AWS is IAM, but you can configure policies to grant or revoke permissions
+across all AWS services.
+
+CloudFront needs to have permission to read resources in your S3 bucket
+(`GetObject` permission for contents of a bucket)
+and to list resources in the bucket (`?ListObjects?` permission for a bucket).
+Without second permission CloudFront won't handle correctly requests that should result
+in "404 Not Found".
+
+Since there is nothing secret in my S3 bucket easiest thing to do was to grant
+`GetObject` and `?ListObjects?` by following policy on S3 bucket:
+
+```json
+```
 
 ### Back to CloudFront
 
-Once you have a SSL certificate it's pretty straight forward to create distribution
-for S3 bucket. As in S3 static hosting there are options to setup
+Once you have a SSL certificate, it's pretty straight forward to create distribution
+for a S3 bucket. As in S3 static hosting there are options to setup
 "default root object" (index.html) and error pages (there can be separate
 error page for each HTTP error code).
 
-One catch is that CloudFront needs to have ListBucket permission for S3 bucket
-it is service, otherwise it won't handle "404 Not Found" correctly.
-
-Another catch is that once resource is cached in CloudFront it may take 24 hours
+One catch is that once resource is cached in CloudFront it may take 24 hours
 to refresh it. To force refresh you can "Create Invalidation" request
 (first 1000 requests in a month are for free).
 
 ![CloudFront Invalidation](008-invalidate.png)
+
+## Moving from PHP to Python
+
+My PHP based solution was simple: I edited and published Markdown files on Github.
+There was a `cron` that pulled changes from Github and PHP wrapper
+to translate these into HTML when requested.
+I wanted to move that part into AWS too.
+
+Using [Markdown]() library
+it was quite easy to translate
+my rudimentary PHP into Python that generates static HTML files.
+
+Thanks to [Dulwich]() library
+I could implement Github access easily too.
+
+AWS gives Python API for managing their services, so uploading HTML files
+could be easily automated too. S3 API allows to ask only for metadata
+that contains checksum of a file, so it's not hard to upload only files
+that have changed.
+
+## Lambda
+
+In 2 hours or so I had working Python script that was able to update
+my website data in S3. But it's not ideal to setup Python on computer
+at hand just to update blog page. Lambda comes to the rescue.
+
+Lambda is AWS service that allows executing short lived computations.
+It supports Java, GO, PowerShell, Node.js, Ruby and luckily Python.
+I was able to zip my script along with libraries and run it on Lambda.
+
+It even has online code editor which is not bad.
+
+![Lambda code editor](008-lambda.png)
+
+Lambda was designed to handle events on AWS and respond to them.
+There are numerous possible events, e.g. VM running out of memory,
+new S3 resource uploaded, update in DynamoDB database, etc.
+
+## API Gateway
+
+API Gateway is yet another service from AWS. It's sole purpose is calling Lambda.
+It can call Lambda when HTTP (or WebSocket) request comes from the internet
+and respond with returned data.
+
+![API Gateway configuration](008-api-gw.png)
+
+This task seems simple, but again it's necessary to create SSL certificate
+and set up subdomain in Route 53.
+
+After taking care of the above I wrote some JS to be able to refresh my blog
+when I enter correct password on hidden site... and it was not working :-).
+The problem was that API lives on https://api.tomasz-cichocki.pl/ and
+JS lives on https://tomasz-cichocki.pl/, so modern browsers block
+JS from accessing resources on different site.
+That's how I learned what is [CORS]() and after setting it up
+in API Gateway finally everything works.
+
+## How much it costs?
+
+Well, there is yet another AWS service to check that: [TODO name]().
+Some services are for free (public SSL certificates), most have free quota.
+Since this elite blog is not very popular, I only pay for DNS
+and it costs $6 for year for a domain.
+
+![Costs for two months](008-costs.png)
+
+But please don't refresh page too often ;-).
+
+## Conclusions
+
+AWS is lots of services. At first it's easy to get lost. But its services
+try to do one simple thing right and combine well. After some time spent
+with AWS it seems natural to use
+
+`Route 53 | (CloudFront | S3 && Api Gateway | Lambda | DynamoDB )`
+
+just as you do
+
+`cat ... | grep ... | xargs whatever`
