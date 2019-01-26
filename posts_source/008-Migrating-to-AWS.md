@@ -159,15 +159,15 @@ and set up subdomain in Route 53.
 
 After taking care of the above I wrote some JS to be able to refresh my blog
 when I enter correct password on hidden site... and it was not working :-).
-The problem was that API lives on https://api.tomasz-cichocki.pl/ and
-JS lives on https://tomasz-cichocki.pl/, so modern browsers block
+The problem was that API lives on `https://api.tomasz-cichocki.pl/` and
+JS lives on `https://tomasz-cichocki.pl/`, so modern browsers block
 JS from accessing resources on different site.
-That's how I learned what is [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) and after setting it up
-in API Gateway finally everything works.
+That's how I learned what [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) is.
+After setting it in API Gateway finally everything works.
 
 ## How much it costs?
 
-Well, there is yet another AWS service to check that: [Cost Explorer](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-what-is.html).
+Well, there is yet another AWS service to check that: [AWS Cost Explorer](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-what-is.html).
 Some services are for free (public SSL certificates), most have free quota.
 Since this elite blog is not very popular, I only pay for DNS
 and it costs $6 for year for a domain.
@@ -178,9 +178,9 @@ But please don't refresh page too often ;-).
 
 ## Conclusions
 
-AWS is lots of services. At first it's easy to get lost. But its services
+AWS is lots of services. At first it's easy to get lost. But AWS services
 try to do one simple thing right and combine well. After some time spent
-with AWS it seems natural to use
+with them it seems natural to use
 
 `Route 53 | (CloudFront | S3 && Api Gateway | Lambda | DynamoDB )`
 
