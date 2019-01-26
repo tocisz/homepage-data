@@ -30,7 +30,7 @@ from AWS (and port 53 is...).
 AWS won't allow to transfer .pl domain to them, but you can setup hosted zone
 in Route 53 anyway and delegate your domain to AWS DNS servers.
 
-![DNS setup](08-dns.png)
+![DNS setup](008-dns.png)
 
 When you have your hosted zone, it's easy to create alias records that point
 to various other AWS services (S3, CloudFront, API Gateway, ...).
@@ -63,20 +63,37 @@ When certificate is issued you can remove these.
 Another thing to ensure before CloudFront distribution will work are
 permissions.
 AWS has elaborate system to manage what operations on what resources are
-allowed by what `?parties?`. Service that is responsible for permissions
+allowed by what principal. Service that is responsible for permissions
 in AWS is IAM, but you can configure policies to grant or revoke permissions
 across all AWS services.
 
 CloudFront needs to have permission to read resources in your S3 bucket
-(`GetObject` permission for contents of a bucket)
-and to list resources in the bucket (`?ListObjects?` permission for a bucket).
+(`s3:GetObject` permission for contents of a bucket)
+and to list resources in the bucket (`s3:ListBucket` permission for a bucket).
 Without second permission CloudFront won't handle correctly requests that should result
 in "404 Not Found".
 
 Since there is nothing secret in my S3 bucket easiest thing to do was to grant
-`GetObject` and `?ListObjects?` by following policy on S3 bucket:
+`s3:GetObject` and `s3:ListBucket` by setting following policy on S3 bucket:
 
 ```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::tomasz-cichocki.pl"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::tomasz-cichocki.pl/*"
+        }
+    ]
+}
 ```
 
 ### Back to CloudFront
@@ -99,11 +116,11 @@ There was a `cron` that pulled changes from Github and PHP wrapper
 to translate these into HTML when requested.
 I wanted to move that part into AWS too.
 
-Using [Markdown]() library
+Using [Markdown](https://github.com/Python-Markdown/markdown) library
 it was quite easy to translate
 my rudimentary PHP into Python that generates static HTML files.
 
-Thanks to [Dulwich]() library
+Thanks to [Dulwich](https://github.com/dulwich/dulwich) library
 I could implement Github access easily too.
 
 AWS gives Python API for managing their services, so uploading HTML files
@@ -150,7 +167,7 @@ in API Gateway finally everything works.
 
 ## How much it costs?
 
-Well, there is yet another AWS service to check that: [TODO name]().
+Well, there is yet another AWS service to check that: [Cost Explorer](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-what-is.html).
 Some services are for free (public SSL certificates), most have free quota.
 Since this elite blog is not very popular, I only pay for DNS
 and it costs $6 for year for a domain.
