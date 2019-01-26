@@ -138,7 +138,7 @@ Lambda is AWS service that allows executing short lived computations.
 It supports Java, GO, PowerShell, Node.js, Ruby and luckily Python.
 I was able to zip my script along with libraries and run it on Lambda.
 
-It even has online code editor which is not bad.
+It has online code editor which is not bad:
 
 ![Lambda code editor](008-lambda.png)
 
