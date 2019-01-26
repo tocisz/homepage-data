@@ -162,7 +162,7 @@ when I enter correct password on hidden site... and it was not working :-).
 The problem was that API lives on https://api.tomasz-cichocki.pl/ and
 JS lives on https://tomasz-cichocki.pl/, so modern browsers block
 JS from accessing resources on different site.
-That's how I learned what is [CORS]() and after setting it up
+That's how I learned what is [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) and after setting it up
 in API Gateway finally everything works.
 
 ## How much it costs?
