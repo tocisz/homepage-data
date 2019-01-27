@@ -116,7 +116,7 @@ There was a `cron` that pulled changes from Github and PHP wrapper
 to translate these into HTML when requested.
 I wanted to move that part into AWS too.
 
-Using [Markdown](https://github.com/Python-Markdown/markdown) library
+Using [Jinja2](http://jinja.pocoo.org/) and [Markdown](https://github.com/Python-Markdown/markdown) libraries
 it was quite easy to translate
 my rudimentary PHP into Python that generates static HTML files.
 
