@@ -2,10 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>{title}</title>
+  <title>{{ title }}</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="{{ cssdir }}/style.css">
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <header></header>
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-3 push-md-9 bd-sidebar">{% block site %}{% endblock %}</div>
+    <div class="col-12 col-md-9 pull-md-3 bd-content">{% block main %}{% endblock %}</div>
+  </div>
+</div>
+{% endblock %}
+<footer class="bd-footer"></footer>
+</body>
+</html>

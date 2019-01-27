@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container-fluid">
+<h1>The blog archiv<span id="ref">e</span></h1>
+<p/>
+<ul>
+  {% for post in posts %}<li><a href="posts/{{ post.name }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+</div>
+<script type="text/javascript">
+document.getElementById("ref").onclick = function() {
+    document.location = "refresh.html";
+};
+</script>
+{% endblock %}
