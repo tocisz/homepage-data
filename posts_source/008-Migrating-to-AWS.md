@@ -62,8 +62,8 @@ When certificate is issued you can remove these.
 
 Another thing to ensure before CloudFront distribution will work are
 permissions.
-AWS has elaborate system to manage what operations on what resources are
-allowed by what principal. Service that is responsible for permissions
+AWS has elaborate system to manage who is allowed to do what operations on which resources. 
+Service that is responsible for permissions
 in AWS is IAM, but you can configure policies to grant or revoke permissions
 across all AWS services.
 
