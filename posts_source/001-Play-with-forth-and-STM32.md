@@ -1,4 +1,5 @@
 date: 2018-02-22
+abstract: My notes on Blue Pill STM32 microcontroller programming with Forth.
 
 # STM32F103C8 tutorial
 Originally published on [Github](https://github.com/tocisz/forthplay). Some code samples can be found there too.

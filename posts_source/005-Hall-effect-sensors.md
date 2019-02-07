@@ -1,4 +1,5 @@
 date: 2018-03-10
+abstract: Some fun with motor from broken CD-ROM.
 
 # Hall effect sensors
 Today's edition of my scrap electronic series is about

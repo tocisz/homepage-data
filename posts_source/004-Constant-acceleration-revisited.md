@@ -1,4 +1,5 @@
 date: 2018-03-04
+abstract: Motion equations for stepper revisited.
 
 # Constant acceleration revisited
 ## What is wrong?

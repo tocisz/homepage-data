@@ -1,4 +1,5 @@
 date: 2018-02-27
+abstract: Simulating pendulum motion with stepper motor and Forth code.
 
 # Digital pendulum
 ## Constant acceleration

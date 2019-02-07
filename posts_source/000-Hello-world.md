@@ -1,4 +1,5 @@
 date: 2018-02-22
+abstract: Why this blog came to life? Because it was easy to create it...
 
 # Hello,
 

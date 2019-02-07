@@ -1,4 +1,5 @@
 date: 2018-02-24
+abstract: How to drive stepper motor with two push switches and with Forth code?
 
 # Driving stepper motor
 

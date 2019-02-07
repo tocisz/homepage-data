@@ -1,4 +1,5 @@
 date: 2018-05-10
+abstract: Notes about connecting two types of LCD screens to Blue Pill STM32 microcontroller.
 
 # LCD Screens
 

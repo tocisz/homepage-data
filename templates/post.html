@@ -5,6 +5,9 @@
     {% for post in posts %}<li><a href="{{ post.name }}">{{ post.title }}</a></li>
     {% endfor %}
   </ul>
+  <div class="container-fluid">
+    <a href="/rss.xml"><img src="{{ cssdir }}/rss.gif" width="36" height="14"></a>
+  </div>
 {% endblock %}
 
 {% block main %}
