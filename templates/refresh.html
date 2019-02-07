@@ -61,7 +61,7 @@ function refresh() {
      return response.json();
    })
    .then(response => {
-     $resp.innerHTML = response;
+     $resp.innerHTML = JSON.stringify(response);
    })
    .catch(err => {
      setStyle($resp, 'alert-danger');
