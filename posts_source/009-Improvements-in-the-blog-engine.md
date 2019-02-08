@@ -11,7 +11,7 @@ When you look at the picture from the last article showing Lambda code editor yo
 
 ![Lambda code editor](008-lambda.png)
 
-_Why Amazon did unusable editor? Am I doing something wrong?_ I was asking myself. And soon I found solution. It's better to use layers to store libraries. These can be uploaded once and shared by many Lambda functions. When using layers to store libraries there is no problem with the editor.
+_Why Amazon did unusable editor? Am I doing something wrong?_ I asked myself. And soon I found the solution. It's better to use layers to store libraries. These can be uploaded once and shared by many Lambda functions. When using layers to store libraries there is no problem with the editor.
 
 ## Syntax highlighting
 
@@ -24,4 +24,4 @@ On my phone I use RSS aggregator to follow a few of my favorite feeds. If you al
 For this I use [rfeed](https://github.com/svpino/rfeed) library.
 
 ## Final thoughts
-I like what I did ;-). If you would like to create similar approach for creating website, as usually, [the code is on GitHub](https://github.com/tocisz/homepage-generator).
+I like what I did ;-). If you would like to create similar approach for creating website [the code is on GitHub](https://github.com/tocisz/homepage-generator), as usually.
