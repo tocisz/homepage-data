@@ -179,7 +179,7 @@ Worth noting:
 * `not not1 (X, W)` instantiates gate `not` ...
 
 Logic gates work on vectors too. I guess gates are generic modules that work
-for any vector width:
+for any vector length:
 ```verilog
 module top(X, A, B);
   input [3:0] A;
@@ -455,7 +455,7 @@ module ca2(clk, out, rule, left, state, set_state, right);
 endmodule
 ```
 
-Now we can set it up and cycle clock in a look to see how it evolves:
+Now we can set it up and cycle clock in a loop to see how it evolves:
 
 ```C++
 void print(Vca2& top, int i) {
@@ -511,7 +511,7 @@ i=10    out=01111101
 
 ### More cells
 
-It would be nice to be able to generate cells and connection by some kind of
+It would be nice to be able to generate cells and connections by some kind of
 loop, wouldn't it? It is possible indeed.
 
 ```Verilog
