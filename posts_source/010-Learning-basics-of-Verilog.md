@@ -541,18 +541,16 @@ module ca3(clk, out, rule, left, state, set_state, right);
   genvar index;
   generate
   for (index=1; index < 31; index=index+1)
-    begin: gen_code_label
-      ca_cell ith(
-        .clk(clk),
-        .rule(rule),
-        .set_state(set_state),
-        .state(state[index]),
-        .out(out[index]),
+    ca_cell ith(
+      .clk(clk),
+      .rule(rule),
+      .set_state(set_state),
+      .state(state[index]),
+      .out(out[index]),
 
-        .left(out[index-1]),
-        .right(out[index+1])
-      );
-    end
+      .left(out[index-1]),
+      .right(out[index+1])
+    );
   endgenerate
 
   ca_cell i_last(
