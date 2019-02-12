@@ -364,7 +364,7 @@ Synthesis result is pretty much what I expected. We can see
 
 * D filp-flop to store state
 * multiplexer to set given state or calculated state
-* something named shiftx, what I expected to be demultiplexer,
+* something named shiftx, what I expected also to be multiplexer,
   but maybe some sort of shift register can be used instead.
 
 ![Visualization of synthesized circuit](010-screenshot1.png)
