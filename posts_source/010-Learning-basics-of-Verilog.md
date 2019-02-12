@@ -1,7 +1,8 @@
 date: 2019-02-10
 abstract: Short introduction to Verilog written by someone who doesn't know it.
+redirect_from: 010-Learning-basics-of-Verilog
 
-# Learning basics of Verilog with Verilator
+# Learning basics of Verilog with Verilator and DigitalJS
 
 ***What is Verilog?***
 
@@ -10,8 +11,13 @@ To cite [Wikipedia](https://en.wikipedia.org/wiki/Verilog):
 
 ***What is Verilator?***
 
-To cite [authors of Verilator](https://www.veripool.org/wiki/verilator):
+To cite authors of [Verilator](https://www.veripool.org/wiki/verilator):
 > Verilator is the fastest free Verilog HDL simulator, and outperforms most commercial simulators. Verilator compiles synthesizable SystemVerilog (generally not test-bench code), plus some SystemVerilog and Synthesis assertions into single- or multithreaded C++ or SystemC code.
+
+***What is DigitalJS?***
+
+To cite [Tilk](http://www.tilk.eu/) who is an author of [DigitalJS](https://github.com/tilk/digitaljs):
+> DigitalJS is a digital circuit simulator implemented in Javascript. It is designed to simulate circuits synthesized by hardware design tools like [Yosys](http://www.clifford.at/yosys/), and it has a companion project [yosys2digitaljs](https://github.com/tilk/yosys2digitaljs), which converts Yosys output files to DigitalJS. It is also intended to be a teaching tool, therefore readability and ease of inspection is one of top concerns for the project.
 
 ## Modules
 
@@ -47,6 +53,12 @@ module top(X, A, B);
   assign  X = ~(A & B);
 endmodule
 ```
+
+To check our first module, we can go to [Yosys2digitaljs](http://digitaljs.tilk.eu/) web application,
+paste Verilog code, and we get synthesized circuit visualization.
+Just a NAND gate.
+
+![NAND gate](010-nand.png)
 
 To test it with Verilator, we need C++ (or SystemC, but I'll stick with C++) code
 to run simulation:
@@ -228,6 +240,10 @@ module register(Q, D, clk);
 endmodule
 ```
 
+Synthesis gives a single [D-type filp-flop](http://electronics-course.com/d-flip-flop).
+
+ ![D-type filp-flop](010-d.png)
+
 To see how it works, let's write simple test code:
 ```C++
 void print(Vregister& top, int i) {
@@ -344,6 +360,15 @@ module ca_cell(clk, out, rule, left, state, set_state, right);
 endmodule
 ```
 
+Synthesis result is pretty much what I expected. We can see
+
+* D filp-flop to store state
+* multiplexer to set given state or calculated state
+* something named shiftx, what I expected to be demultiplexer,
+  but maybe some sort of shift register can be used instead.
+
+![Visualization of synthesized circuit](010-screenshot1.png)
+
 To test single cell, I wrote C++ test case, which is too boring to cite.
 Believe me, it works just fine.
 
@@ -454,6 +479,10 @@ module ca2(clk, out, rule, left, state, set_state, right);
   );
 endmodule
 ```
+
+For sake of readability I will visualize only three cells connected:
+
+![CA cells connected](010-screenshot2.png)
 
 Now we can set it up and cycle clock in a loop to see how it evolves:
 
