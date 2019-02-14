@@ -545,7 +545,7 @@ loop, wouldn't it? It is possible indeed.
 
 ```Verilog
 module ca3(clk, out, rule, left, state, set_state, right);
-  parameter WIDTH = 32;
+  parameter WIDTH = 32; // modules can be parameterized
 
   input wire       clk;
   input wire [7:0] rule;
@@ -562,13 +562,13 @@ module ca3(clk, out, rule, left, state, set_state, right);
   generate
   for (i=0; i < WIDTH; i=i+1)
     ca_cell ith(
-      .clk,
+      .clk, // when name of port is the same as name of wire/reg, argument can be omitted
       .rule,
       .set_state,
       .state(state[i]),
       .out(out[i]),
 
-      .left(i == 0 ? left : out[i-1]),
+      .left(i == 0 ? left : out[i-1]), // conditionals are allowed in generate block
       .right(i == WIDTH-1 ? right : out[i+1])
     );
   endgenerate
