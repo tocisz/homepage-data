@@ -545,16 +545,18 @@ loop, wouldn't it? It is possible indeed.
 
 ```Verilog
 module ca3(clk, out, rule, left, state, set_state, right);
+  parameter WIDTH = 32;
+
   input wire       clk;
   input wire [7:0] rule;
 
   input wire       left;
   input wire       right;
 
-  input wire [31:0] state;
-  input wire       set_state;
+  input wire [WIDTH-1 : 0]  state;
+  input wire                set_state;
 
-  output wire [31:0] out;
+  output wire [WIDTH-1 : 0] out;
 
   genvar i;
   generate
