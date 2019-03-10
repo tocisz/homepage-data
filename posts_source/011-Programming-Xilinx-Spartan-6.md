@@ -14,10 +14,9 @@ The board has 50MHz external clock source for FPGA. But that doesn't mean FPGA
 internal clock needs to be the same. Xilinx FPGAs have [dedicated modules for
 managing clock resources](https://www.xilinx.com/support/documentation/user_guides/ug382.pdf).
 By using [PLL](https://en.wikipedia.org/wiki/Phase-locked_loop) techniques it is possible
-to generate higher frequency and to introduce many phase shifted clock signals.
+to generate higher or lower frequency and to introduce many phase shifted clock signals.
 
-In this project I only wanted my clock to be really slow, so I could see cellular
-automaton working with my eyes. Instead of using Xilinx built-in clock synthesis
+In this project I only wanted my clock to be really slow, so I could see cellular automaton working. Instead of using Xilinx built-in clock synthesis
 I wrote really simple module to divide clock frequency. All it contains is
 a counter. Adding one on each input clock cycle and giving last bit of a counter
 as and output.
@@ -53,7 +52,7 @@ I also wanted to be able to reset automaton by push button.
 This turned out to be harder than I thought. My first attempt wasn't working.
 Generally, you can expect problems when reset signal is not released
 synchronously with clock signal. To prevent this, combination of two
-flip-flops called "reset bridge" is commonly used. More on resetting FPGA
+flip-flops called *reset bridge* is commonly used. More on resetting FPGA
 in [this article](https://www.eetimes.com/document.asp?doc_id=1278998).
 
 Reset bridge in Verilog:
@@ -103,9 +102,9 @@ Another possibility is to constraint timing of signal paths.
 
 ## Conclusions
 
-It was quite simple to get this simple project running. Next, I will try
+It was easy to get this simple project running. Next, I will try
 something more complicated.
 
-And here is video showing cell automaton evolving with 9 LEDs:
+And here is a video showing cell automaton evolving with 9 LEDs:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nB4hAfsUMjI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
