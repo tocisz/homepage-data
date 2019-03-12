@@ -3,7 +3,7 @@ abstract: Simulating cellular automaton in hardware using Xilinx Spartan 6 FPGA.
 
 # Programming Xilinx Spartan 6
 
-In the [last installment of the blog](010-Learning-basics-of-Verilog) I was learning basics of Verilog and
+In the [last article](010-Learning-basics-of-Verilog) I was learning basics of Verilog and
 as a result I created simulation of cellular automaton.
 
 I have a board with Xilinx Spartan 6 FPGA to play with, so I wanted to program it
