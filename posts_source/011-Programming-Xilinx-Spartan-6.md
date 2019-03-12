@@ -34,14 +34,14 @@ reg [BITS:1] cnt;
 initial
 begin
 	cnt = 0;
-end;
+end
 
 assign clk_out = cnt[BITS];
 
-always@(posedge clk_in)
+always @(posedge clk_in)
 begin
 	cnt[BITS:1] <= cnt[BITS:1] + 1'b1;
-end;
+end
 
 endmodule
 ```
