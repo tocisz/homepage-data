@@ -25,5 +25,18 @@ header {
   padding: 132px 0;
   margin-bottom: 1rem;
   background-color: #f7f7f7;
-  background: url(tc.svg) no-repeat center;
+  background-image: url(tc-img.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+_:-ms-lang(x), header {
+  background-image: url(tc.svg) !important;
+}
+
+@media only screen and (min-width: 1200px) {
+  header {
+    background-image: url(tc.svg) !important;
+  }
 }
