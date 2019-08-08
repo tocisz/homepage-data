@@ -255,4 +255,29 @@ begin
 It is important to note that clock for memory module is phase shifted
 by 180 degrees. This gives some time for signals to stabilize before positive edge of memory clock signal comes.
 
+### Memory module
+
+How much memory is needed? One line of the image has 1080 bits.
+We need to store previous and next line, because next line is
+calculated from previous line. This gives 2160 bits - not much.
+My Spartan-6 chip XC6SLX16 has 64 blocks of 9 [Kibits](https://en.wikipedia.org/wiki/Kibibit) (72 [KiB](https://en.wikipedia.org/wiki/Kibibit) in total).
+
+To access memory I use [BRAM_SDP_MACRO](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/spartan6_hdl.pdf#570643735). It gives some abstraction
+over [Spartan memory primitives](https://www.xilinx.com/support/documentation/user_guides/ug383.pdf). I set read width and write width
+to 16 bits. I select option to use output register. Documentation
+of this option says:
+
+> A value of 1 enables to the output registers to the RAM enabling quicker clock-to-out from the RAM at the expense of an added clock cycle of read latency. A value of 0 allows a read in one clock cycle but will have slower clock to out timing.
+
+So I expect values to be present at the output after two clock
+cycles of RAM. Since RAM clock is phase shifted, I expect values
+after three main clock cycles.
+
 ### Image generation
+
+Module that generates next line of the image has similar structure to the module that generates first line of the image. There are two
+differences:
+
+1. It needs not only to write to memory, but also read from
+the memory.
+2. It uses some combinatorial logic to generate next line from previous line.
