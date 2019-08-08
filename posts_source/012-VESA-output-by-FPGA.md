@@ -257,9 +257,9 @@ by 180 degrees. This gives some time for signals to stabilize before positive ed
 
 ### Memory module
 
-How much memory is needed? One line of the image has 1080 bits.
+How much memory is needed? One line of the image has 1280 bits.
 We need to store previous and next line, because next line is
-calculated from previous line. This gives 2160 bits - not much.
+calculated from previous line. This gives 2560 bits - not much.
 My Spartan-6 chip XC6SLX16 has 64 blocks of 9 [Kibits](https://en.wikipedia.org/wiki/Kibibit) (72 [KiB](https://en.wikipedia.org/wiki/Kibibit) in total).
 
 To access memory I use [BRAM_SDP_MACRO](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/spartan6_hdl.pdf#570643735). It gives some abstraction
