@@ -278,6 +278,101 @@ after three main clock cycles.
 Module that generates next line of the image has similar structure to the module that generates first line of the image. There are two
 differences:
 
-1. It needs not only to write to memory, but also read from
-the memory.
+1. It needs not only to write to memory, but also to read from the memory.
 2. It uses some combinatorial logic to generate next line from previous line.
+
+Combinatorial logic is calculating next generation of cellular automaton state from previous generation. I've decided to do this
+in 16-bit blocks (memory width).
+Since state of a cell depends also on state of a neighboring cells I need 18 bits of an input for 16-bit output.
+I want screen to wrap around edge, so as value before first value in a line I take last value of a line.
+
+So the sequence memory reads is:
+
+* read last word of a line (to know value of last pixel in a line)
+* read first word of a line
+* read following words of a line till last one
+
+We want last three memory reads to be available, so we store values
+in a shift register (which is filled through buffer2):
+
+```Verilog
+always @ ( posedge clk )
+begin
+	buffer0 <= buffer1[0];
+	buffer1 <= buffer2;
+end
+```
+
+The sequence of memory writes is simple: write from the first word till last one. But it needs to be delayed by right count of clock cycles
+(data must be available + one clock cycle of combinatorial logic).
+
+Another thing is: we shouldn't write to the same memory location we  will be reading from. Double buffering (of scanline pixels) is used. First buffer uses memory addresses 0-79, second uses words 80-159. This makes incrementing
+memory counter slightly complicated (I'm sure this could be simplified,
+e.g. by aligning memory ranges to power of 2):
+
+```Verilog
+function [7:0] increment_addr;
+input [7:0] addr;
+begin
+	if (addr == 8'd 79)
+		increment_addr = 8'd 0;
+	else if (addr == 8'd 159)
+		increment_addr = 8'd 80;
+	else
+		increment_addr = addr + 1'b1;
+end
+endfunction
+```
+
+To sum up, here is the pseudocode:
+```
+1. buffer[2] <= mem[rbegin+79]
+2. buffer[2] <= mem[rbegin]
+3. buffer[2] <= mem[rbegin+1]
+4. left  = buffer[0][0]
+   right = buffer[2][15]
+   mem[wptr++] <= comb_ca(left, buffer[1], right)
+   buffer[2] <= mem[rptr++]
+... (as above)
+84. mem[wptr] <= result
+```
+
+### Filling lines
+
+So far I've described how memory is filled with lines to be shown.
+But how is it sent to the screen?
+
+From VGA synchronization module we are getting following information:
+
+* `CounterX` - current pixel in a line (pixel data is expected
+  to be sent when it's 0-1279)
+* `CounterY` - least significant bit of line number (remember? lines
+  are double buffered...)
+* `inDisplayArea` - are we in display area of a screen? - it's easier
+  to calculate this in synchronization module
+* `inPrefetchArea` - set to true some time before `inDisplayArea`
+  is true to give time for memory read
+
+The code is ugly, but it somehow works...
+```Verilog
+reg  [15:0] display_reg;
+reg load_to_reg;
+
+always @*
+begin
+	if (CounterYparity)
+		addr[7:0] = CounterX[10:4] + 7'd 80;
+	else
+		addr[7:0] = CounterX[10:4];
+
+	read         = inPrefetchArea && (CounterX[3:0] == 4'b0001); // on 0000 inDisplayArea is still false
+	load_to_reg  = inPrefetchArea && (CounterX[3:0] == 4'b1111);
+	image        = inDisplayArea && display_reg[15-CounterX[3:0]];
+end
+
+always @(posedge clk)
+begin
+	if (load_to_reg)
+		display_reg <= data;
+end
+```
