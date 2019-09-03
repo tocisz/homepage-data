@@ -376,3 +376,95 @@ begin
 		display_reg <= data;
 end
 ```
+Most of the code above is combinatorial &ndash; not using clock input.
+Clock is used only in the part for storing data from memory into register.
+Would it be better to have registers for output signals?
+
+For me this is both hard and important question when designing for FPGA.
+Maybe people designing digital electronics have some intuition about that. I don't have good intuition yet, but I see tradeoff:
+
+* more combinatorial logic in one clock cycle &mdash; less clock cycles needed for processing;
+* less combinatorial logic in one clock cycle &mdash; resulting circuit is less complicated, has smaller propagation delay, so faster clock can be used.
+
+In this project clock is set to 108 MHz because of video mode requirements. If combinatorial logic is simple enough to have propagation delay less than 9.25 ns (~length of clock cycle) than I think it's the right level of complication.
+
+Some of the output signals go to memory, which is clocked by signal shifted by 180 degrees. These signals have to propagate in half of clock cycle, so I think here is potential bottleneck. I'm pretty sure
+it's possible to calculate propagation delay of a signal with Xilinx
+tools, but I haven't tried that.
+
+### Synchronization
+
+Finally, we go back to synchronization module. This is the heart of this project.
+It not only generates VESA synchronization signals (hsync, vsync), but also:
+
+* address lines for current horizontal and vertical position;
+* signals that tell if current position is in display area;
+* signal that tells when to start prefetching line from memory.
+
+Let's dive into the code.
+
+We have separate block for current position (`counterX` and `counterY`).
+```Verilog
+wire counterXmaxed = (counterX == 11'd 1687);
+wire counterYmaxed = (counterY == 11'd 1065);
+
+always @(posedge clk)
+begin
+	if (counterXmaxed)
+		counterX <= 0;
+	else
+		counterX <= counterX + 1'b1;
+
+	if (counterXmaxed && counterYmaxed)
+		counterY <= 0;
+	else if (counterXmaxed && !counterYmaxed)
+		counterY <= counterY + 1'b1;
+end
+```
+
+Looks pretty straightforward. But `counterX` is actually private register.
+It is set to be zero when horizontal synchronization starts.
+This is convenient when calculating `vga_h_sync` output.
+
+But outside of synchronization module it's more convenient
+to start counting X position when display area starts or
+some fixed time before (to have time to fetch pixel values from memory).
+I have decided to start counting X position 16 pixels before
+visible area. The name of the variable is `prefetchCounterX`.
+
+```Verilog
+wire [10:0] xShift     = 112 + 248 - `FRONT_MARGIN;
+always @(posedge clk)
+begin
+  // polarity of sync pulse is positive
+  vga_h_sync <= counterX < 112;
+
+  if (counterX == xShift)
+  	prefetchCounterX <= 0;
+  else
+  	prefetchCounterX <= prefetchCounterX + 1'b1;
+end
+```
+
+I do no such tricks with Y position, so block for `vga_v_sync` is check for range of `counterY`:
+```Verilog
+always @(posedge vga_h_sync)
+begin
+	vga_v_sync <= counterY >= 11'd 1056 && counterY < 11'd 1059;
+end
+```
+
+Finally, we have control signals that inform about being in display area and in prefetch area (to access pixel values at beginning of a line in advance).
+```Verilog
+always @(posedge clk)
+begin
+	inDisplayArea <= prefetchCounterX >= 11'd 15 && prefetchCounterX < 11'd 1295
+	                 && counterY < 11'd 1024;
+
+   inPrefetchArea <= prefetchCounterX < 11'd 1280 && counterY < 11'd 1024;
+end
+```
+
+## Demonstration
+
+## What's next
