@@ -433,6 +433,7 @@ I have decided to start counting X position 16 pixels before
 visible area. The name of the variable is `prefetchCounterX`.
 
 ```Verilog
+`define FRONT_MARGIN 16
 wire [10:0] xShift     = 112 + 248 - `FRONT_MARGIN;
 always @(posedge clk)
 begin
@@ -444,6 +445,16 @@ begin
   else
   	prefetchCounterX <= prefetchCounterX + 1'b1;
 end
+```
+
+Why `112 + 248 - 16` above?
+```
+Horizontal:       width  start
+ - visible area - 1280   0
+ - front porch  - 48     1280
+ - sync pulse   - 112    1328
+ - back porch   - 248    1440
+ - whole line   - 1688
 ```
 
 I do no such tricks with Y position, so block for `vga_v_sync` is check for range of `counterY`:
