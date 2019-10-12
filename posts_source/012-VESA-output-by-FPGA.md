@@ -304,7 +304,7 @@ end
 ```
 
 The sequence of memory writes is simple: write from the first word till last one. But it needs to be delayed by right count of clock cycles
-(data must be available + one clock cycle of combinatorial logic).
+(data must be available + one clock cycle for combinatorial logic of cellular automata).
 
 Another thing is: we shouldn't write to the same memory location we  will be reading from. Double buffering (of scanline pixels) is used. First buffer uses memory addresses 0-79, second uses words 80-159. This makes incrementing
 memory counter slightly complicated (I'm sure this could be simplified,
@@ -476,6 +476,14 @@ begin
 end
 ```
 
-## Demonstration
+## Hardware setup
+
+Hardware setup is very simple. `Hsync` and `vsync` are connected to matching VGA cable lines with 150 Ohm resistors (exact value doesn't really matter). `R`, `G`, `B` lines are connected to matching VGA lines with 270 Ohm resistors.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HsgpleO0X0M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## What's next
+
+In this project I generate video output by calculating it on the fly line by line. For some real video output usually whole
+video frame is stored in memory. To do this I have to learn
+using SDRAM memory that is included on FPGA board I have.
