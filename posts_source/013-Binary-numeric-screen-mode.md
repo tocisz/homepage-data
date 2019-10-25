@@ -25,8 +25,8 @@ easier I also added row numbers and column numbers.
 This project is similar to [previous one](012-VESA-output-by-FPGA),
 so I was able to reuse some of its modules:
 
-* I also needed to [generate VGA synchronization signals](012-VESA-output-by-FPGA#Synchronization)
-* and to [generate right clock frequency](012-VESA-output-by-FPGA#Clock signals).
+* a module for [generating VGA synchronization signals](012-VESA-output-by-FPGA#Synchronization)
+* a module for [generating pixel clock frequency](012-VESA-output-by-FPGA#Clock signals).
 
 Let's look how modules are connected:
 
@@ -46,7 +46,7 @@ memory to display them on the screen. Port `A` and port `B` can have separate
 clock signals.
 
 This functionality is available in RAMB8BWER primitive of Spartan-6
-and `debug_ram` is just a wrapper of a primitive in Spartan-6 library.
+and `debug_ram` is just a wrapper of a primitive from Spartan-6 library.
 
 Having separate clock signals in two ports of RAM module is very useful.
 It enables it to act as a buffer between logic being debugged and `display`
@@ -76,7 +76,7 @@ For details see *Block RAM Timing Characteristics* on page 31 of
 
 Changing clock signal to phase shifted almost solved the problem. Now all values
 were "leaking" by one pixel. This was actually expected. Values need
-two clock cycles to be available in the output register of the memory.
+two clock cycles to become available in the output register of the memory.
 
 I was prepared for that &mdash; I had a buffer that was delaying RGB signal
 already in the code &mdash; I only needed to delay "read memory" signal instead of RGB value.
@@ -103,8 +103,6 @@ I solved the problem by instructing `clkdiv` module to give third clock signal
 at the output, that is identical to the input signal.
 
 ## Result
-
-See the photo below:
 
 ![Widok na 1008 bajtów pamięci FPGA](013-screen.jpg)
 
