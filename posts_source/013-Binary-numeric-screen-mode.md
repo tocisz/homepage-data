@@ -25,8 +25,8 @@ easier I also added row numbers and column numbers.
 This project is similar to [previous one](012-VESA-output-by-FPGA),
 so I was able to reuse some of its modules:
 
-* a module for [generating VGA synchronization signals](012-VESA-output-by-FPGA#Synchronization)
-* a module for [generating pixel clock frequency](012-VESA-output-by-FPGA#Clock signals).
+* a module for [generating VGA synchronization signals](012-VESA-output-by-FPGA#synchronization)
+* a module for [generating pixel clock frequency](012-VESA-output-by-FPGA#clock-signals).
 
 Let's look how modules are connected:
 
@@ -62,7 +62,7 @@ That being said, there were some problems I had to solve.
 
 ### Memory delay
 
-In the first version that was able to read memory
+In the first version that was able to read memory,
 values of memory cells were leaking to neighboring blocks.
 What's more interesting, when memory byte being read changes from 0 to 1,
 it requires one clock cycle more that when it changes from 1 to 0.
