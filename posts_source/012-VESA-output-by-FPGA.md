@@ -1,5 +1,5 @@
 date: 2019-08-06
-abstract: Generating VESA signal of cellular automaton by FPGA.
+abstract: Generating VESA signal of cellular automaton simulation by FPGA.
 
 # VESA output by FPGA
 

@@ -64,8 +64,8 @@ That being said, there were some problems I had to solve.
 
 In the first version that was able to read memory
 values of memory cells were leaking to neighboring blocks.
-What's more interesting change of value from 0 to 1 required one clock cycle
-more that change of value from 1 to 0.
+What's more interesting, when memory byte being read changes from 0 to 1,
+it requires one clock cycle more that when it changes from 1 to 0.
 
 ![Leaking pixels](013-leaking_pixels.jpg)
 
