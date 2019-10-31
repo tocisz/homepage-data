@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 
+{% block meta %}
+  <meta property="og:title" content="{{ title }}"/>
+{% if "image" in meta %}
+  <meta property="og:image" content="{{ meta.image }}"/>
+{% endif %}
+  <meta property="og:url" content="{{ disqs_url }}"/>
+  <meta property="og:site_name" content="Tomasz Cichocki - technology blog"/>
+  <meta property="og:description" content="{{ meta.abstract }}"/>
+  <meta name="twitter:title" content="{{ title }}" />
+{% if "image" in meta %}
+  <meta name="twitter:image" content="{{ meta.image }}" />
+{% endif %}
+  <meta name="twitter:url" content="{{ disqs_url }}" />
+  <meta name="twitter:card" content="summary" />
+{% endblock %}
+
 {% block site %}
   <ul>
     {% for post in posts %}<li><a href="{{ post.name }}">{{ post.title }}</a></li>
