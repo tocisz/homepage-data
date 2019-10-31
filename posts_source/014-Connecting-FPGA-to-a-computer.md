@@ -1,5 +1,6 @@
 date: 2019-10-31
 abstract: Connecting binary numeric LCD controller to a computer with UART.
+image: 001-1.jpg
 
 # Connecting FPGA to a computer with UART
 
@@ -13,18 +14,18 @@ I use cheap Chinese USB-to-UART converter. The same that was used
 [in my first blog port](001-Play-with-forth-and-STM32).
 
 This time I decided I don't want to implement UART communication by myself.
-I found [project on opencores.org](https://opencores.org/...) that was ready
-to use. All I had to do was to connect it to memory block.
+I found a [project on opencores.org](https://opencores.org/projects/uart2bus) that was ready
+to use. All I had to do was to connect UART controller to a memory block.
 
 ## Direct connection
 
 In the future I plan to use UART connection not only to read and write memory,
-but also to be able to control other circuits (processor, memory, etc.)
+but also to control other modules (processor, memory, etc.)
 on FPGA chip. This can be done by assigning address space to these
-circuits and handling read/write operations in a circuit specific manner.
+modules and handling read/write operations in a module specific manner.
 
 As for now I am only connecting 1kB block of RAM, but I will interface trough
-routing module anyway. Let's see input and output signals of the module:
+a routing module anyway. Let's see input and output signals of this module:
 
 ```Verilog
 module uart_sram_bridge
@@ -46,7 +47,7 @@ module uart_sram_bridge
 );
 ```
 
-We have clock signal.
+We have a clock signal. Not used now, but may be useful later.
 
 We have a section of signals that are connected to UART interface. UART
 module handles incoming read/write commands and asserts `uart_read`,
@@ -74,12 +75,12 @@ assign uart_gnt = 1;
 
 ## Adding delay (and latches)
 
-After connecting appropriate signals directly from UART controller
-to the memory block I found out that it's not working.
+After connecting signals as it is described in the previous section,
+I found that it's not working.
 
-The usual problem is that memory block expects address and data signals
-to be stable some time before positive clock edge.
-This can be fixed by using memory clock signal that is delayed by 180&deg;.
+The usual problem is that RAM memory expects address and data signals
+to be stable some time before positive clock signal edge.
+This can be done by using memory clock signal that is delayed by 180&deg;.
 But it didn't help. I could plainly see (that part was working)
 that I can't write to the memory. I don't know why.
 
@@ -165,7 +166,7 @@ As you can see:
 This version works perfectly fine. Xilinx FPGA synthesis software doesn't like it.
 It warns about it:
 
-> Xst:737 - Found 1-bit latch for signal <sram_address<9>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+> Xst:737 - Found 1-bit latch for signal &lt;sram_address&lt;9&gt;&gt;. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 
 I don't know how much of a truth is in this warning. I've checked that
 version with flip-flop also works.
