@@ -1,10 +1,10 @@
 date: 2019-10-31
-abstract: Connecting binary numeric LCD controller to computers with UART.
+abstract: Connecting binary numeric LCD controller to a computer with UART.
 
-# Connecting FPGA to computer with UART
+# Connecting FPGA to a computer with UART
 
-In [the last blog entry](013-Binary-numeric-screen-mode) I mapped contents
-of memory block to be shown on VGA screen. But it was boring to see
+In [the last blog entry](013-Binary-numeric-screen-mode) I mapped memory block
+to VGA screen. But it was boring to see
 how memory is being filled with ones by very simple process.
 So last couple of days I was working on connecting my FPGA to computer with
 UART.
