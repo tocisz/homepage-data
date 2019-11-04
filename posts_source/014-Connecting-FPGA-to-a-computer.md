@@ -75,8 +75,8 @@ assign uart_gnt = 1;
 
 ## Adding delay (and latches)
 
-~~After connecting signals as it is described in the previous section,
-I found that it's not working.~~ **After publishing this post
+<del>After connecting signals as it is described in the previous section,
+I found that it's not working.</del> **After publishing this post
 and testing it once again, I discovered that it is working.**
 I really don't know what was the problem. Anyway, you may
 read my attempt to make it work below. It may be applicable in other
