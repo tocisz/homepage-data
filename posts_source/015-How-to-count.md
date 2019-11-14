@@ -1,6 +1,6 @@
 date: 2019-11-14
 abstract: How to count modulo? Should I use modulo operator or if statement? Does it matter at all?
-image: 015-LFSR.png
+image: 015-LFSR.jpg
 
 # How to count?
 
