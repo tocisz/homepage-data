@@ -1,5 +1,5 @@
 date: 2019-11-14
-abstract: How to count modulo? Should I use modulo operator or if statement? Does it matter at all?
+abstract: How to count modulo? Should I use modulo operator or "if" statement? Does it matter at all?
 image: 015-LFSR.jpg
 
 # How to count?
@@ -252,6 +252,8 @@ means dealing with [carry propagation delay](https://en.wikipedia.org/wiki/Propa
 
 Are there more efficient ways to change states? I'm not the first one to ask
 this question. There is some [research about it](https://www.researchgate.net/publication/335441783_Cyclic_Sequence_Generators_as_Program_Counters_for_High-Speed_FPGA-based_Processors).
+
+![https://tomasz-cichocki.pl/posts/015-LFSR.jpg]
 
 Some more interesting links:
 
