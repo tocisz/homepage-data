@@ -40,3 +40,25 @@ _:-ms-lang(x), header {
     background-image: url(tc.svg) !important;
   }
 }
+
+table {
+  margin-top: 0;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}

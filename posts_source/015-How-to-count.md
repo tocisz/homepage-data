@@ -253,7 +253,7 @@ means dealing with [carry propagation delay](https://en.wikipedia.org/wiki/Propa
 Are there more efficient ways to change states? I'm not the first one to ask
 this question. There is some [research about it](https://www.researchgate.net/publication/335441783_Cyclic_Sequence_Generators_as_Program_Counters_for_High-Speed_FPGA-based_Processors).
 
-Some more interesting links:
+More on this topic:
 
 * What is [LFSR](https://en.wikipedia.org/wiki/Linear-feedback_shift_register)?
 * [Number of states in LFSR](https://crypto.stackexchange.com/questions/5683/number-of-states-in-a-lfsr)
