@@ -8,7 +8,7 @@ After a while since [using Verilator](010-Learning-basics-of-Verilog) I wanted
 to see what advice will give it's lint on [my latest project](014-Connecting-FPGA-to-a-computer).
 
 It didn't find anything really bad. There was WIDTH mismatch somewhere,
-but also warning related to the use of modulo (`%`) operator.
+but also warning related to the use of modulo `%` operator.
 
 Internet says that modulo operator should be avoided in Verilog.
 [Xilinx forum](https://forums.xilinx.com/t5/Synthesis/Modulus-synthesizable-or-non-synthesizable/m-p/747498#M20683)
@@ -78,7 +78,7 @@ always @(posedge clk)
 endmodule
 ```
 
-Is there difference in FPGA resources usage?
+Is there a difference in FPGA resources usage?
 
 | Utilization                                         | c100_mod | c100_if  |
 | --------------------------------------------------- | --------:| --------:|
