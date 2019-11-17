@@ -18,7 +18,12 @@
 
 {% block site %}
   <ul>
-    {% for post in posts %}<li><a href="{{ post.name }}">{{ post.title }}</a></li>
+    {% for post in posts %}
+      {% if post.active %}
+        <li>{{ post.title }}</li>
+      {% else %}
+        <li><a href="{{ post.name }}">{{ post.title }}</a></li>
+      {% endif %}
     {% endfor %}
   </ul>
   <div class="container-fluid">
@@ -31,8 +36,8 @@
 <div id="disqus_thread"></div>
 <script>
 var disqus_config = function () {
-this.page.url = '{{ disqs_url }}';  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = '{{ disqs_id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+this.page.url = '{{ disqs_url }}';
+this.page.identifier = '{{ disqs_id }}';
 };
 (function() { // DON'T EDIT BELOW THIS LINE
 var d = document, s = d.createElement('script');
