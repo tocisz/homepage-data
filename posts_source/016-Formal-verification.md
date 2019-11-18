@@ -1,6 +1,6 @@
 date: 2019-11-17
 abstract: In this post I use basic formal verification to prove that all 6 versions of counters I created last time work as expected.
-image: 016-fail.png
+image: 016.png
 
 # Formal verification
 
