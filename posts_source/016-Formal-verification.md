@@ -38,7 +38,7 @@ end
 ```
 
 Second, order is important. Value in the next clock cycle, should be
-greater than in the previous clock cycle. We may write something like:
+incremented by one. We may write something like:
 ```Verilog
 always @(posedge clk) begin
   assert($past(c100) + 1 == c100);
@@ -91,7 +91,7 @@ We can look at the trace file, to see what happened.
 ![Trace file for the fail](016-fail.png)
 
 The mistake is in the assertion. Value goes back to 0 after 99 (as it should),
-but we asserted it should always increase. Correct version below:
+but we asserted it should always increment. Correct version below:
 ```Verilog
 always @(posedge clk) begin
   if (f_past_valid)
