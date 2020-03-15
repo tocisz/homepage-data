@@ -213,7 +213,7 @@ begin
 end
 ```
 
-### Instruction decode before ALU
+### Prepare data for ALU
 
 ALU is used by `<>-=[` instructions. Depending on instruction
 different values of `alu_a` and `alu_b` are set.
@@ -233,7 +233,7 @@ begin
 end
 ```
 
-### Instruction decode after ALU
+### Instruction decode
 
 This is the most important part. Here we
 have ALU output calculated and we can use it
@@ -302,3 +302,13 @@ begin
   end
 end
 ```
+
+## Conclusions
+
+Of course I'm not the first one. There are other brainfuck
+CPUs. There is even [a paper about implementing 256-core
+brainfuck CPU on FPGA](http://people.csail.mit.edu/wjun/papers/sigtbd16.pdf) from MIT.
+But it's my first CPU and I think it's quite elegant.
+
+I haven't put in on my FPGA yet, but I plan to run it on my FPGA
+and communicate with it trough UART.
