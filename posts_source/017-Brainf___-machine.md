@@ -104,9 +104,9 @@ We also have stack (S) to store program address of beginning of a loop.
 | ----------- | -------------------------                     | ------- |
 | `00XXXXXX`  | A += X (signed); PC++                         | `<>`    |
 | `01XXXXXX`  | (*A) += X (signed); PC++                      | `-+`    |
-| `10000000`  | if (*A) { PC = top(S) } else { pop(S); PC++ } | `]`     |
-| `100XXXXX` (X &ne; 0)| if (*A) { push(S,PC+1); PC++ } else { PC += X } | `[` |
-| `101XXXXX`&nbsp;`XXXXXXXX`| if (*A) { push(S,PC+2); PC+=2 } else { PC += X } | `[` |
+| `10000000`  | if (*A) &#123; PC = top(S) &#125; else &#123; pop(S); PC++ &#125; | `]`     |
+| `100XXXXX` (X &ne; 0)| if (*A) &#123; push(S,PC+1); PC++ &#125; else &#123; PC += X &#125; | `[` |
+| `101XXXXX`&nbsp;`XXXXXXXX`| if (*A) &#123; push(S,PC+2); PC+=2 &#125; else &#123; PC += X &#125; | `[` |
 | `11000000` | store input to (*A)     | `,` |
 | `11100000` | send (*A) to the output | `.` |
 
