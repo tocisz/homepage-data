@@ -310,5 +310,4 @@ CPUs. There is even [a paper about implementing 256-core
 brainfuck CPU on FPGA](http://people.csail.mit.edu/wjun/papers/sigtbd16.pdf) from MIT.
 But it's my first CPU and I think it's quite elegant.
 
-I haven't put in on my FPGA yet, but I plan to run it on my FPGA
-and communicate with it trough UART.
+I plan to run it on my FPGA and communicate with it trough UART.
