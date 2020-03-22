@@ -47,7 +47,12 @@ Unit <stack> synthesized.
 In "advanced synthesis" step it decides to use LUTs to implement it:
 ```
 Synthesizing (advanced) Unit <stack>.
-INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_store> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_store> will be implemented on LUTs
+either because you have described an asynchronous read or because of currently
+unsupported block RAM features. If you have described an asynchronous read,
+making it synchronous would allow you to take advantage of available block RAM
+resources, for optimized device usage and improved timings. Please refer to your
+documentation for coding guidelines.
     -----------------------------------------------------------------------
     | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
