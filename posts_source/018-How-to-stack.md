@@ -81,7 +81,7 @@ Number of Slice LUTs:                        120 out of   9,112    1%
       Number using O5 and O6:                  8
 ```
 
-Looking at [Spartan-6 FPGA Configurable Logic Block](ug384-Spartan-6 FPGA Configurable Logic Block.pdf) documentation:
+Looking at [Spartan-6 FPGA Configurable Logic Block](https://www.xilinx.com/support/documentation/user_guides/ug384.pdf) documentation:
 
 * 4 LUTs can be used to create "Simple Dual-Port 32 x 6-bit RAM"
 * 2 LUTs can be used to create "Dual-Port 64 x 1-bit RAM"
@@ -91,7 +91,7 @@ We can see that using twice "Simple Dual-Port 32 x 6-bit RAM" and once
 
 In fact we can make stack twice as deep (32 elements) with no additional
 resources. 10 LUTs is really not much, and I think it's better to use them
-than to use [dedicated memory block](ug383-Spartan-6 FPGA Block RAM Resources.pdf) for the stack.
+than to use [dedicated memory block](https://www.xilinx.com/support/documentation/user_guides/ug383.pdf) for the stack.
 
 ## Using shift register
 
