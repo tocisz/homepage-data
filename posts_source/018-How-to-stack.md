@@ -192,5 +192,5 @@ is slightly faster.
 
 Why it was used by j1a processor? This processor is targeted for
 [Lattice iCEstick](http://www.latticesemi.com/icestick), not for
-Xilinx Spartan. I suspect that it is better suited to the architecture
+Xilinx Spartan. I suspect that it is better suited for the architecture
 of this FPGA.
