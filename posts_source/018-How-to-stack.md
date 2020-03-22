@@ -1,6 +1,6 @@
 date: 2020-03-22
 abstract: In this article I will compare two implementations of a stack on Xilinx Spartan 6 FPGA.
-image: 018.png
+image: 018.jpg
 
 # How to stack? (on an FPGA)
 
