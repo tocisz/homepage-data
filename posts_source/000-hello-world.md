@@ -1,7 +1,8 @@
-date: 2018-02-22
-abstract: Why this blog came to life? Because it was easy to create it...
+# 000-Hello-world
 
-# Hello,
+date: 2018-02-22 abstract: Why this blog came to life? Because it was easy to create it...
+
+## Hello,
 
 Welcome to my minimalistic blog! It's a place for gathering ideas and notes for my hobby projects.
 
@@ -16,3 +17,4 @@ First what I've changed is version of Markdown-to-HTML translator. I upgraded it
 Than I did some minor changes in template...
 
 Last but not least, I wrote simple `cron` job to update this blog from [Github](https://github.com/tocisz/homepage). Now I can edit it on Github and `cron` will pull updates automatically.
+
