@@ -64,10 +64,11 @@ table tr:nth-child(2n) {
 }
 
 .vcard-details {
+    padding-left: 10px;
     list-style: none
 }
 
 .vcard-detail {
-    padding-left: 32px;
+    padding-left: 0px;
     font-size: 14px;
 }
