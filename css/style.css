@@ -62,3 +62,12 @@ table td {
 table tr:nth-child(2n) {
   background-color: #f6f8fa;
 }
+
+.vcard-details {
+    list-style: none
+}
+
+.vcard-detail {
+    padding-left: 32px;
+    font-size: 14px;
+}
